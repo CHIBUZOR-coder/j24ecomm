@@ -43,13 +43,16 @@ export const EcomProvider = ({ children }) => {
     // fetch products
     const fetchProduct = async () => {
         try{
-            const response = await fetch("http://localhost:8000/api/products", {
+            const response = await fetch(
+              "https://ecommerce-api-fr54.onrender.com/api/products",
+              {
                 method: "GET",
                 headers: {
-                    "Content-Type": "application/json",
+                  "Content-Type": "application/json",
                 },
                 // body: JSON.stringify()
-            })
+              }
+            );
             const data = await response.json()
             if(!response.ok) {
                 showAndHide("error", "Could not fetch product")
@@ -67,14 +70,17 @@ export const EcomProvider = ({ children }) => {
     if (isAuthenticated) {
       // if authenticated
       try {
-        const res = await fetch("http://localhost:8000/api/add-to-cart", {
-          method: "POST",
-          headers: {
-            "auth-token": `${localStorage.getItem("auth-token")}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ productId, quantity }), // pass the value of quantity and productId in the details
-        });
+        const res = await fetch(
+          "https://ecommerce-api-fr54.onrender.com/api/add-to-cart",
+          {
+            method: "POST",
+            headers: {
+              "auth-token": `${localStorage.getItem("auth-token")}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ productId, quantity }), // pass the value of quantity and productId in the details
+          }
+        );
         const data = await res.json();
         if (res.ok) {
           setCartItems(data.data); // add the data
@@ -115,13 +121,16 @@ export const EcomProvider = ({ children }) => {
    const fetchCart = async () => {
     if (isAuthenticated) {
       // authenticated
-      const res = await fetch("http://localhost:8000/api/carts", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": `${localStorage.getItem("auth-token")}`,
-        },
-      });
+      const res = await fetch(
+        "https://ecommerce-api-fr54.onrender.com/api/carts",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": `${localStorage.getItem("auth-token")}`,
+          },
+        }
+      );
       const data = await res.json();
       console.log("without", data)
       if (res.ok) {
@@ -152,14 +161,17 @@ export const EcomProvider = ({ children }) => {
       if (isAuthenticated) {
         try {
           // authenticated
-          const res = await fetch("http://localhost:8000/api/delete-cart-items", {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              "auth-token": `${localStorage.getItem("auth-token")}`,
-            },
-            body: JSON.stringify({ productId }),
-          });
+          const res = await fetch(
+            "https://ecommerce-api-fr54.onrender.com/api/delete-cart-items",
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                "auth-token": `${localStorage.getItem("auth-token")}`,
+              },
+              body: JSON.stringify({ productId }),
+            }
+          );
           const data = await res.json();
           if (res.ok) {
             showAndHide("success", "Product Successfully deleted from cart");
@@ -202,14 +214,17 @@ export const EcomProvider = ({ children }) => {
     
       if (isAuthenticated) {
         try {
-          const res = await fetch("http://localhost:8000/api/update-cart-items", {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              "auth-token": `${localStorage.getItem("auth-token")}`,
-            },
-            body: JSON.stringify({ productId, quantity: parsedQuantity }),
-          });
+          const res = await fetch(
+            "https://ecommerce-api-fr54.onrender.com/api/update-cart-items",
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                "auth-token": `${localStorage.getItem("auth-token")}`,
+              },
+              body: JSON.stringify({ productId, quantity: parsedQuantity }),
+            }
+          );
     
           const data = await res.json();
           if (res.status === 200) {
@@ -284,7 +299,7 @@ export const EcomProvider = ({ children }) => {
     const createOrder = async (transaction_Id, orderId) => {
       try {
         const response = await fetch(
-          "http://localhost:8000/api/verify-payment",
+          "https://ecommerce-api-fr54.onrender.com/api/verify-payment",
           {
             method: "POST",
             headers: {
